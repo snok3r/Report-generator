@@ -1,5 +1,6 @@
 package com.kdavidenko.util;
 
+import com.kdavidenko.interfaces.XMLSettingParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -13,30 +14,35 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class XMLSettingParser {
+public class XMLSettingParserImpl implements XMLSettingParser {
 
     private int width;
     private int height;
     private final List<Column> columnsSetting = new ArrayList<Column>();
 
+    @Override
     public void process(String fileName) throws Exception {
         Document doc = buildDoc(fileName);
         processPageSetting(doc.getElementsByTagName("page").item(0));
         processColumns(doc.getElementsByTagName("column"));
     }
 
+    @Override
     public int getWidth() {
         return width;
     }
 
+    @Override
     public int getHeight() {
         return height;
     }
 
+    @Override
     public String getColumnTitle(int idx) {
         return columnsSetting.get(idx).title;
     }
 
+    @Override
     public String[] getColumnsTitles() {
         String[] titles = new String[getNumberOfColumns()];
         for (int i = 0; i < titles.length; i++)
@@ -45,10 +51,12 @@ public class XMLSettingParser {
         return titles;
     }
 
+    @Override
     public int getColumnWidth(int idx) {
         return columnsSetting.get(idx).width;
     }
 
+    @Override
     public int getNumberOfColumns() {
         return columnsSetting.size();
     }
