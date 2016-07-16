@@ -1,15 +1,27 @@
 package com.kdavidenko.model;
 
-import static com.kdavidenko.util.Settings.getColumnSize;
+import static com.kdavidenko.util.Setting.getColumnSize;
 
 public class Cell {
 
+    private final int idx;
     private String data;
-    private int idx;
+
+    public Cell(int idx) {
+        this(idx, "");
+    }
 
     public Cell(int idx, String data) {
         this.idx = idx;
         this.data = data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getData() {
+        return data;
     }
 
     public String print() {

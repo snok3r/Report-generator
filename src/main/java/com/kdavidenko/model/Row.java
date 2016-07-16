@@ -1,31 +1,37 @@
 package com.kdavidenko.model;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
-import static com.kdavidenko.util.Settings.*;
+import static com.kdavidenko.util.Setting.*;
 
 
 public class Row {
     private List<Cell> cells;
+    private boolean closingRow;
 
     public Row() {
-        cells = new LinkedList<>();
-
-        cells.add(new Cell(0, "cell"));
-        cells.add(new Cell(1, "cell"));
-        cells.add(new Cell(2, "cell"));
+        cells = new ArrayList<Cell>(columnsNumber);
     }
 
-    public static Row header() {
-        Row row = new Row();
-        row.cells = new LinkedList<>();
+    public void addCell(Cell cell) {
+        cells.add(cell);
+    }
 
-        row.cells.add(new Cell(0, "Номер"));
-        row.cells.add(new Cell(1, "Дата"));
-        row.cells.add(new Cell(2, "ФИО"));
+    public void addCell(int idx, Cell cell) {
+        cells.add(idx, cell);
+    }
 
-        return row;
+    public String getCellData(int idx) {
+        return cells.get(idx).getData();
+    }
+
+    public void setClosingRow(boolean closingRow) {
+        this.closingRow = closingRow;
+    }
+
+    public boolean isClosingRow() {
+        return closingRow;
     }
 
     public String print() {
@@ -35,7 +41,22 @@ public class Row {
         for (Cell cell : cells) {
             sb.append(cell.print() + columnDelimeter);
         }
-        sb.append(endOfLine);
+
+        return sb.toString();
+    }
+
+    public static Row header(String[] columnsNames) {
+        Row row = new Row();
+        row.cells = new ArrayList<Cell>(columnsNumber);
+
+        for (int i = 0; i < columnsNumber; i++)
+            row.cells.add(new Cell(i, columnsNames[i]));
+
+        return row;
+    }
+
+    public static String printLine() {
+        StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < pageWidth; i++)
             sb.append(rowsDelimeter);

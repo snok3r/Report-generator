@@ -3,7 +3,7 @@ package com.kdavidenko.util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Settings {
+public class Setting {
     public static final char endOfLine = '\n';
     public static final char columnDelimeter = '|';
     public static final char rowsDelimeter = '-';
@@ -17,20 +17,20 @@ public class Settings {
     private static List<Integer> columnsWidth;
 
     public static void setDataDelimeter(char dataDelimeter) {
-        Settings.dataDelimeter = dataDelimeter;
+        Setting.dataDelimeter = dataDelimeter;
     }
 
     public static void setPageWidth(int pageWidth) {
-        Settings.pageWidth = pageWidth;
+        Setting.pageWidth = pageWidth;
     }
 
     public static void setPageHeight(int pageHeight) {
-        Settings.pageHeight = pageHeight;
+        Setting.pageHeight = pageHeight;
     }
 
     public static void setColumnsNumber(int columnsNumber) {
-        Settings.columnsNumber = columnsNumber;
-        columnsWidth = new ArrayList<>(columnsNumber);
+        Setting.columnsNumber = columnsNumber;
+        columnsWidth = new ArrayList<Integer>(columnsNumber);
     }
 
     public static int getColumnSize(int idx) {
@@ -39,5 +39,14 @@ public class Settings {
 
     public static void setColumnSize(int idx, int size) {
         columnsWidth.add(idx, size);
+    }
+
+    public static boolean isSettingValid() {
+        int cummulativePageWidth = 0;
+        for (Integer width : columnsWidth)
+            cummulativePageWidth += width + 2;
+        cummulativePageWidth += columnsWidth.size() + 1;
+
+        return pageWidth == cummulativePageWidth;
     }
 }
