@@ -49,14 +49,14 @@ class PageImpl implements Page {
 //        }
 
         if (header != null) {
-            sb.append(header.print() + NEXT_LINE);
-            sb.append(header.printLine() + NEXT_LINE);
+            sb.append(header.print()).append(NEXT_LINE);
+            sb.append(header.printLine()).append(NEXT_LINE);
         }
 
         for (Row row : rows) {
-            sb.append(row.print() + NEXT_LINE);
+            sb.append(row.print()).append(NEXT_LINE);
             if (row.isClosingRow())
-                sb.append(row.printLine() + NEXT_LINE);
+                sb.append(row.printLine()).append(NEXT_LINE);
         }
 
         return sb.toString();

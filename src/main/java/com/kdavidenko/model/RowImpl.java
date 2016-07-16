@@ -11,7 +11,7 @@ import static com.kdavidenko.util.Setting.*;
 
 class RowImpl implements Row {
 
-    private List<Cell> cells;
+    private final List<Cell> cells;
     private boolean closingRow;
 
     RowImpl() {
@@ -54,7 +54,7 @@ class RowImpl implements Row {
 
         sb.append(COLUMN_DELIMITER);
         for (Cell cell : cells) {
-            sb.append(cell.print() + COLUMN_DELIMITER);
+            sb.append(cell.print()).append(COLUMN_DELIMITER);
         }
 
         return sb.toString();

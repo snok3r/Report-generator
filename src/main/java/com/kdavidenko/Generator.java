@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Generator {
     private static Header header;
 
-    private static DocumentElementsFactory factory = new DocumentElementsImpl();
+    private static final DocumentElementsFactory factory = new DocumentElementsImpl();
 
     private static boolean setUpSetting(String settingsPath, XMLSettingParser parser) {
         try {
