@@ -7,4 +7,6 @@ public interface Header {
     String[] getColumnNames();
 
     String print();
+
+    String printLine();
 }

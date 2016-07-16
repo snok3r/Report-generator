@@ -2,15 +2,15 @@ package com.kdavidenko;
 
 import com.kdavidenko.interfaces.*;
 import com.kdavidenko.model.*;
-import com.kdavidenko.model.Header;
 import com.kdavidenko.util.Setting;
 import com.kdavidenko.util.XMLSettingParserImpl;
 
-import java.io.File;
 import java.io.IOException;
 
 public class Generator {
-    private static Row header;
+    private static Header header;
+
+    private static DocumentElementsFactory factory = new DocumentElementsImpl();
 
     private static boolean setUpSetting(String settingsPath, XMLSettingParser parser) {
         try {
@@ -27,7 +27,7 @@ public class Generator {
         for (int i = 0; i < parser.getNumberOfColumns(); i++)
             Setting.setColumnWidth(i, parser.getColumnWidth(i));
 
-        header = new Header(parser.getColumnsTitles());
+        header = factory.getHeader(parser.getColumnsTitles());
 
         return Setting.isSettingValid();
     }
@@ -44,20 +44,20 @@ public class Generator {
             return;
         }
 
-        Document document = new DocumentImpl();
-        Page firstPage = new PageImpl();
+        Document document = factory.getDocument();
+        Page firstPage = factory.getPage();
         firstPage.setHeader(header);
 
         // rows
-        Row firstRow = new RowImpl();
-        firstRow.addCell(0, new CellImpl(0, "1"));
-        firstRow.addCell(1, new CellImpl(1, "25/11"));
-        firstRow.addCell(2, new CellImpl(2, "Павлов"));
+        Row firstRow = factory.getRow();
+        firstRow.addCell(0, factory.getCell(0).setData("1"));
+        firstRow.addCell(1, factory.getCell(1).setData("25/11"));
+        firstRow.addCell(2, factory.getCell(2).setData("Павлов"));
 
-        Row secondRow = new RowImpl();
-        secondRow.addCell(new CellImpl(0));
-        secondRow.addCell(new CellImpl(1));
-        secondRow.addCell(new CellImpl(2, "Дмитрий"));
+        Row secondRow = factory.getRow();
+        secondRow.addCell(factory.getCell(0));
+        secondRow.addCell(factory.getCell(1));
+        secondRow.addCell(factory.getCell(2).setData("Дмитрий"));
         secondRow.setClosingRow(true);
 
         firstPage.addRow(firstRow);

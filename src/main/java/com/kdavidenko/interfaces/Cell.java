@@ -1,7 +1,8 @@
 package com.kdavidenko.interfaces;
 
 public interface Cell {
-    void setData(String data);
+
+    Cell setData(String data);
 
     String getData();
 

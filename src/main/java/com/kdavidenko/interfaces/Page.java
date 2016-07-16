@@ -1,7 +1,7 @@
 package com.kdavidenko.interfaces;
 
 public interface Page {
-    void setHeader(Row header);
+    void setHeader(Header header);
 
     void addRow(int idx, Row row);
 

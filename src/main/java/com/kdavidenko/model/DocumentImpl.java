@@ -13,11 +13,11 @@ import java.util.List;
 
 import static com.kdavidenko.util.Setting.*;
 
-public class DocumentImpl implements Document {
+class DocumentImpl implements Document {
 
     private final List<Page> pages;
 
-    public DocumentImpl() {
+    DocumentImpl() {
         pages = new ArrayList<Page>();
     }
 

@@ -1,5 +1,6 @@
 package com.kdavidenko.model;
 
+import com.kdavidenko.interfaces.Header;
 import com.kdavidenko.interfaces.Page;
 import com.kdavidenko.interfaces.Row;
 
@@ -8,17 +9,17 @@ import java.util.List;
 
 import static com.kdavidenko.util.Setting.NEXT_LINE;
 
-public class PageImpl implements Page {
+class PageImpl implements Page {
 
     private final List<Row> rows;
-    private Row header;
+    private Header header;
 
-    public PageImpl() {
+    PageImpl() {
         rows = new ArrayList<Row>();
     }
 
     @Override
-    public void setHeader(Row header) {
+    public void setHeader(Header header) {
         this.header = header;
     }
 

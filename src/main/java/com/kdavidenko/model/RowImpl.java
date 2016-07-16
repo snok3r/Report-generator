@@ -9,12 +9,12 @@ import java.util.List;
 import static com.kdavidenko.util.Setting.*;
 
 
-public class RowImpl implements Row {
+class RowImpl implements Row {
 
     private List<Cell> cells;
     private boolean closingRow;
 
-    public RowImpl() {
+    RowImpl() {
         cells = new ArrayList<Cell>(columnsNumber);
     }
 

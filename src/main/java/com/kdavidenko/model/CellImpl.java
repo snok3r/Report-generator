@@ -4,23 +4,24 @@ import com.kdavidenko.interfaces.Cell;
 
 import static com.kdavidenko.util.Setting.getColumnWidth;
 
-public class CellImpl implements Cell {
+class CellImpl implements Cell {
 
     private final int idx;
     private String data;
 
-    public CellImpl(int idx) {
+    CellImpl(int idx) {
         this(idx, "");
     }
 
-    public CellImpl(int idx, String data) {
+    CellImpl(int idx, String data) {
         this.idx = idx;
         this.data = data;
     }
 
     @Override
-    public void setData(String data) {
+    public Cell setData(String data) {
         this.data = data;
+        return this;
     }
 
     @Override
