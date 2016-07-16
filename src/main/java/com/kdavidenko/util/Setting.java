@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Setting {
-    public static final char endOfLine = '\n';
+    public static final String endOfLine = System.getProperty("line.separator");
     public static final char columnDelimiter = '|';
     public static final char rowsDelimiter = '-';
     public static final char pageDelimiter = '~';

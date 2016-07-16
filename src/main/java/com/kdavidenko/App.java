@@ -7,6 +7,7 @@ import com.kdavidenko.model.Row;
 import com.kdavidenko.util.Setting;
 import com.kdavidenko.util.XMLSettingParser;
 
+import java.io.File;
 import java.io.IOException;
 
 public class App {
@@ -63,8 +64,8 @@ public class App {
 
         document.addPage(firstPage);
 
-        document.print();
+        //document.print();
 
-        //document.print(new File(args[2]));
+        document.print(new File(args[2]));
     }
 }

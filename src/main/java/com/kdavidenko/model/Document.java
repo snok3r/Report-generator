@@ -1,9 +1,10 @@
 package com.kdavidenko.model;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,15 +30,19 @@ public class Document {
     }
 
     public void print(File file) throws IOException {
+        print(file, Charset.forName("UTF-16"));
+    }
+
+    public void print(File file, Charset charset) throws IOException {
         if (!file.exists()) {
             file.createNewFile();
         }
 
-        BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()));
+        OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file.getAbsoluteFile()), charset);
         for (Page page : pages) {
-            bw.write(page.print());
-            bw.write(Page.printPageDelimiter() + endOfLine);
+            osw.write(page.print());
+            osw.write(Page.printPageDelimiter() + endOfLine);
         }
-        bw.close();
+        osw.close();
     }
 }
