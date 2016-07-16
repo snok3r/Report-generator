@@ -11,7 +11,7 @@ import static com.kdavidenko.util.Setting.*;
 
 public class Document {
 
-    private List<Page> pages;
+    private final List<Page> pages;
 
     public Document() {
         pages = new ArrayList<Page>();
@@ -24,7 +24,7 @@ public class Document {
     public void print() {
         for (Page page : pages) {
             System.out.print(page.print());
-            System.out.print(Page.printPageDelimeter() + endOfLine);
+            System.out.print(Page.printPageDelimiter() + endOfLine);
         }
     }
 
@@ -36,7 +36,7 @@ public class Document {
         BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()));
         for (Page page : pages) {
             bw.write(page.print());
-            bw.write(Page.printPageDelimeter() + endOfLine);
+            bw.write(Page.printPageDelimiter() + endOfLine);
         }
         bw.close();
     }

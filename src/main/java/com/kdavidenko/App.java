@@ -5,26 +5,30 @@ import com.kdavidenko.model.Document;
 import com.kdavidenko.model.Page;
 import com.kdavidenko.model.Row;
 import com.kdavidenko.util.Setting;
+import com.kdavidenko.util.XMLSettingParser;
 
 import java.io.IOException;
 
 public class App {
-    private static boolean setUpSetting() {
-        Setting.setPageWidth(32);
-        Setting.setPageHeight(12);
-        Setting.setDataDelimeter('\t');
+    private static boolean setUpSetting(String settings) {
+        XMLSettingParser parser = new XMLSettingParser();
+        try {
+            parser.process(settings);
+        } catch (Exception e) {
+            System.err.println("Couldn't process XML file " + settings + ": " + e.getMessage());
+            System.exit(-1);
+        }
 
-        Setting.setColumnsNumber(3);
-        Setting.setColumnSize(0, 8);
-        Setting.setColumnSize(1, 7);
-        Setting.setColumnSize(2, 7);
+        Setting.setPageWidth(parser.getWidth());
+        Setting.setPageHeight(parser.getHeight());
 
-        if (!Setting.isSettingValid())
-            return false;
+        Setting.setColumnsNumber(parser.getNumberOfColumns());
+        for (int i = 0; i < parser.getNumberOfColumns(); i++)
+            Setting.setColumnWidth(i, parser.getColumnWidth(i));
 
-        Page.setHeader(Row.header(new String[]{"Номер", "Дата", "ФИО"}));
+        Page.setHeader(Row.header(parser.getColumnsTitles()));
 
-        return true;
+        return Setting.isSettingValid();
     }
 
     public static void main(String[] args) throws IOException {
@@ -34,18 +38,20 @@ public class App {
             return;
         }
 
-        if (!setUpSetting()) {
-            System.err.print("Setting is not valid (wrong number of spaces)");
+        if (!setUpSetting(args[0])) {
+            System.err.print("Setting file is not valid");
             return;
         }
 
         Document document = new Document();
         Page firstPage = new Page();
 
+        // rows
         Row firstRow = new Row();
         firstRow.addCell(0, new Cell(0, "1"));
         firstRow.addCell(1, new Cell(1, "25/11"));
         firstRow.addCell(2, new Cell(2, "Павлов"));
+
         Row secondRow = new Row();
         secondRow.addCell(new Cell(0));
         secondRow.addCell(new Cell(1));

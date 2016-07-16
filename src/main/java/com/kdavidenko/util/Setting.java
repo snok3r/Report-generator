@@ -5,20 +5,15 @@ import java.util.List;
 
 public class Setting {
     public static final char endOfLine = '\n';
-    public static final char columnDelimeter = '|';
-    public static final char rowsDelimeter = '-';
-    public static final char pageDelimeter = '~';
-
-    public static char dataDelimeter;
+    public static final char columnDelimiter = '|';
+    public static final char rowsDelimiter = '-';
+    public static final char pageDelimiter = '~';
+    public static final char dataDelimiter = '\t';
 
     public static int pageWidth;
     public static int pageHeight;
     public static int columnsNumber;
     private static List<Integer> columnsWidth;
-
-    public static void setDataDelimeter(char dataDelimeter) {
-        Setting.dataDelimeter = dataDelimeter;
-    }
 
     public static void setPageWidth(int pageWidth) {
         Setting.pageWidth = pageWidth;
@@ -33,20 +28,20 @@ public class Setting {
         columnsWidth = new ArrayList<Integer>(columnsNumber);
     }
 
-    public static int getColumnSize(int idx) {
-        return columnsWidth.get(idx);
-    }
-
-    public static void setColumnSize(int idx, int size) {
+    public static void setColumnWidth(int idx, int size) {
         columnsWidth.add(idx, size);
     }
 
-    public static boolean isSettingValid() {
-        int cummulativePageWidth = 0;
-        for (Integer width : columnsWidth)
-            cummulativePageWidth += width + 2;
-        cummulativePageWidth += columnsWidth.size() + 1;
+    public static int getColumnWidth(int idx) {
+        return columnsWidth.get(idx);
+    }
 
-        return pageWidth == cummulativePageWidth;
+    public static boolean isSettingValid() {
+        int cumulativePageWidth = 0;
+        for (Integer width : columnsWidth)
+            cumulativePageWidth += width + 2;
+        cumulativePageWidth += columnsWidth.size() + 1;
+
+        return pageWidth == cumulativePageWidth;
     }
 }

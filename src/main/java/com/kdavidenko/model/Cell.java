@@ -1,6 +1,6 @@
 package com.kdavidenko.model;
 
-import static com.kdavidenko.util.Setting.getColumnSize;
+import static com.kdavidenko.util.Setting.getColumnWidth;
 
 public class Cell {
 
@@ -28,7 +28,7 @@ public class Cell {
         StringBuilder sb = new StringBuilder();
         sb.append(" ").append(data).append(" ");
 
-        int spacesRemain = getColumnSize(idx) - data.length();
+        int spacesRemain = getColumnWidth(idx) - data.length();
         for (int i = 0; i < spacesRemain; i++)
             sb.append(" ");
 

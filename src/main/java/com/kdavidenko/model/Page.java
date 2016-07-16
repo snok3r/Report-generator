@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.kdavidenko.util.Setting.endOfLine;
-import static com.kdavidenko.util.Setting.pageDelimeter;
+import static com.kdavidenko.util.Setting.pageDelimiter;
 
 public class Page {
 
-    private List<Row> rows;
+    private final List<Row> rows;
     private static Row header;
 
     public Page() {
@@ -46,7 +46,7 @@ public class Page {
         return sb.toString();
     }
 
-    public static String printPageDelimeter() {
-        return String.valueOf(pageDelimeter);
+    public static String printPageDelimiter() {
+        return String.valueOf(pageDelimiter);
     }
 }

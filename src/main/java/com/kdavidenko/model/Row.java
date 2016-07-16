@@ -37,9 +37,9 @@ public class Row {
     public String print() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(columnDelimeter);
+        sb.append(columnDelimiter);
         for (Cell cell : cells) {
-            sb.append(cell.print() + columnDelimeter);
+            sb.append(cell.print() + columnDelimiter);
         }
 
         return sb.toString();
@@ -59,7 +59,7 @@ public class Row {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < pageWidth; i++)
-            sb.append(rowsDelimeter);
+            sb.append(rowsDelimiter);
 
         return sb.toString();
     }
