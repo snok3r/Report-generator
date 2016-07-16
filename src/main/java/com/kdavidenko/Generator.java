@@ -10,7 +10,7 @@ import com.kdavidenko.util.XMLSettingParser;
 import java.io.File;
 import java.io.IOException;
 
-public class App {
+public class Generator {
     private static boolean setUpSetting(String settings) {
         XMLSettingParser parser = new XMLSettingParser();
         try {

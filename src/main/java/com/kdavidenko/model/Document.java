@@ -25,7 +25,7 @@ public class Document {
     public void print() {
         for (Page page : pages) {
             System.out.print(page.print());
-            System.out.print(Page.printPageDelimiter() + endOfLine);
+            System.out.print(PAGE_DELIMITER + NEXT_LINE);
         }
     }
 
@@ -41,7 +41,7 @@ public class Document {
         OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file.getAbsoluteFile()), charset);
         for (Page page : pages) {
             osw.write(page.print());
-            osw.write(Page.printPageDelimiter() + endOfLine);
+            osw.write(PAGE_DELIMITER + NEXT_LINE);
         }
         osw.close();
     }

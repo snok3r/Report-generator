@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Setting {
-    public static final String endOfLine = System.getProperty("line.separator");
-    public static final char columnDelimiter = '|';
-    public static final char rowsDelimiter = '-';
-    public static final char pageDelimiter = '~';
-    public static final char dataDelimiter = '\t';
+    public static final String NEXT_LINE = System.getProperty("line.separator");
+    public static final char COLUMN_DELIMITER = '|';
+    public static final char ROWS_DELIMITER = '-';
+    public static final char PAGE_DELIMITER = '~';
+    public static final char DATA_DELIMITER = '\t';
 
     public static int pageWidth;
     public static int pageHeight;

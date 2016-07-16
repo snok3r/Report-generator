@@ -3,8 +3,7 @@ package com.kdavidenko.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.kdavidenko.util.Setting.endOfLine;
-import static com.kdavidenko.util.Setting.pageDelimiter;
+import static com.kdavidenko.util.Setting.NEXT_LINE;
 
 public class Page {
 
@@ -34,19 +33,15 @@ public class Page {
     public String print() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(header.print() + endOfLine);
-        sb.append(Row.printLine() + endOfLine);
+        sb.append(header.print() + NEXT_LINE);
+        sb.append(Row.printLine() + NEXT_LINE);
 
         for (Row row : rows) {
-            sb.append(row.print() + endOfLine);
+            sb.append(row.print() + NEXT_LINE);
             if (row.isClosingRow())
-                sb.append(Row.printLine() + endOfLine);
+                sb.append(Row.printLine() + NEXT_LINE);
         }
 
         return sb.toString();
-    }
-
-    public static String printPageDelimiter() {
-        return String.valueOf(pageDelimiter);
     }
 }
