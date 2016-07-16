@@ -1,7 +1,7 @@
 package com.kdavidenko.interfaces;
 
 public interface XMLSettingParser {
-    void process(String fileName) throws Exception;
+    void parse(String fileName) throws Exception;
 
     int getWidth();
 

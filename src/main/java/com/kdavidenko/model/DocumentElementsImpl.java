@@ -14,11 +14,6 @@ public class DocumentElementsImpl implements DocumentElementsFactory {
     }
 
     @Override
-    public Header getHeader(String[] columnNames) {
-        return new HeaderTemp(columnNames);
-    }
-
-    @Override
     public Row getRow() {
         return new RowImpl();
     }
@@ -26,5 +21,10 @@ public class DocumentElementsImpl implements DocumentElementsFactory {
     @Override
     public Cell getCell(int columnIndex) {
         return new CellImpl(columnIndex);
+    }
+
+    @Override
+    public Cell getCell(int columnIndex, String data) {
+        return new CellImpl(columnIndex, data);
     }
 }

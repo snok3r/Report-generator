@@ -21,7 +21,7 @@ public class XMLSettingParserImpl implements XMLSettingParser {
     private final List<Column> columnsSetting = new ArrayList<Column>();
 
     @Override
-    public void process(String fileName) throws Exception {
+    public void parse(String fileName) throws Exception {
         Document doc = buildDoc(fileName);
         processPageSetting(doc.getElementsByTagName("page").item(0));
         processColumns(doc.getElementsByTagName("column"));
