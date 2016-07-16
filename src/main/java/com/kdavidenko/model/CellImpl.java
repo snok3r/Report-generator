@@ -30,6 +30,11 @@ class CellImpl implements Cell {
     }
 
     @Override
+    public boolean isEmpty() {
+        return "".equals(data);
+    }
+
+    @Override
     public String print() {
         StringBuilder sb = new StringBuilder();
         sb.append(" ").append(data).append(" ");

@@ -6,5 +6,7 @@ public interface Cell {
 
     String getData();
 
+    boolean isEmpty();
+
     String print();
 }

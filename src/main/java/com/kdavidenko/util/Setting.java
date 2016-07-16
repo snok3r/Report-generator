@@ -13,7 +13,7 @@ public class Setting {
     public static int pageWidth;
     public static int pageHeight;
     public static int columnsNumber;
-    private static List<Integer> columnsWidth;
+    private static List<Integer> columnsWidths;
 
     public static void setPageWidth(int pageWidth) {
         Setting.pageWidth = pageWidth;
@@ -25,22 +25,22 @@ public class Setting {
 
     public static void setColumnsNumber(int columnsNumber) {
         Setting.columnsNumber = columnsNumber;
-        columnsWidth = new ArrayList<Integer>(columnsNumber);
+        columnsWidths = new ArrayList<Integer>(columnsNumber);
     }
 
     public static void setColumnWidth(int idx, int size) {
-        columnsWidth.add(idx, size);
+        columnsWidths.add(idx, size);
     }
 
     public static int getColumnWidth(int idx) {
-        return columnsWidth.get(idx);
+        return columnsWidths.get(idx);
     }
 
     public static boolean isSettingValid() {
         int cumulativePageWidth = 0;
-        for (Integer width : columnsWidth)
+        for (Integer width : columnsWidths)
             cumulativePageWidth += width + 2;
-        cumulativePageWidth += columnsWidth.size() + 1;
+        cumulativePageWidth += columnsWidths.size() + 1;
 
         return pageWidth == cumulativePageWidth;
     }
