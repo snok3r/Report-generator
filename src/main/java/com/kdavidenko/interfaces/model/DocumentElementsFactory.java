@@ -8,42 +8,42 @@ import com.kdavidenko.interfaces.model.Row;
 public interface DocumentElementsFactory {
 
     /**
-     * Return an empty Document.
-     * You can add Pages in it.
+     * Возвращает пустой документ,
+     * в который можно добавлять страницы.
      *
-     * @return an empty Document
+     * @return пустой документ
      */
     Document getDocument();
 
     /**
-     * Returns an empty Page.
-     * You can add Rows on it.
+     * Возвращает пустую страницу,
+     * в которую можно добавлять строки.
      *
-     * @return an empty Page
+     * @return пустая страница
      */
     Page getPage();
 
     /**
-     * Returns an Row with empty-data Cells.
+     * Возвращает строку с пустыми ячейкам.
      *
-     * @return an Row with empty-data Cells
+     * @return строка с пустыми ячейками
      */
     Row getRow();
 
     /**
-     * Returns Cell with empty data ("").
+     * Возвращает пустую ячейку (значение = "").
      *
-     * @param columnIndex index of the column where to put it
-     * @return Cell with empty data ("")
+     * @param columnIndex индекс столбца
+     * @return пустая ячейка (значение = "")
      */
     Cell getCell(int columnIndex);
 
     /**
-     * Returns Cell with given <tt>data</tt>
+     * Возвращает ячейку с данными <tt>data</tt>.
      *
-     * @param columnIndex index of the column where to put it
-     * @param data        value to put in
-     * @return Cell with given <tt>data</tt>
+     * @param columnIndex индекс столбца
+     * @param data        значение ячейки
+     * @return ячейка с данными <tt>data</tt>
      */
     Cell getCell(int columnIndex, String data);
 }

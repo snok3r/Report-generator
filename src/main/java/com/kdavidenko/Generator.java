@@ -6,6 +6,14 @@ import com.kdavidenko.implementations.*;
 import java.io.File;
 
 public class Generator {
+    /**
+     * Для работы нужно три параметра: путь до xml-файла с настройками,
+     * файла с данными (разделенными табуляцией),
+     * файла для сохранения репорта.
+     *
+     * @param args пути до файлов
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
 
         if (args.length < 3) {
@@ -19,7 +27,7 @@ public class Generator {
         Report report = reportBuilder.getReport();
         report.print();
 
-//        report.print(new File(args[2]));
-//        System.out.println("Отчёт успешно сохранён в файл '" + args[2] + "'");
+        report.print(new File(args[2]));
+        System.out.println("Отчёт успешно сохранён в файл '" + args[2] + "'");
     }
 }

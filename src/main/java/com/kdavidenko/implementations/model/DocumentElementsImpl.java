@@ -3,7 +3,7 @@ package com.kdavidenko.implementations.model;
 import com.kdavidenko.interfaces.model.*;
 
 public class DocumentElementsImpl implements DocumentElementsFactory {
-    private static DocumentElementsFactory ourFactory = new DocumentElementsImpl();
+    private static final DocumentElementsFactory ourFactory = new DocumentElementsImpl();
 
     public static DocumentElementsFactory getFactory() {
         return ourFactory;
