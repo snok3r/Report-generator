@@ -1,6 +1,7 @@
 package com.kdavidenko.implementations.model;
 
 import com.kdavidenko.interfaces.model.Cell;
+import com.kdavidenko.interfaces.model.DocumentElementsFactory;
 import com.kdavidenko.interfaces.model.Row;
 
 import java.util.ArrayList;
@@ -16,6 +17,10 @@ class RowImpl implements Row {
 
     RowImpl() {
         cells = new ArrayList<Cell>(columnsNumber);
+
+        DocumentElementsFactory factory = DocumentElementsImpl.getFactory();
+        for (int i = 0; i < columnsNumber; i++)
+            cells.add(factory.getCell(i));
     }
 
     @Override
@@ -25,7 +30,7 @@ class RowImpl implements Row {
 
     @Override
     public void addCell(int idx, Cell cell) {
-        cells.add(idx, cell);
+        cells.set(idx, cell);
     }
 
     @Override

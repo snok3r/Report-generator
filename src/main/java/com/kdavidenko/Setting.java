@@ -42,6 +42,6 @@ public class Setting {
             cumulativePageWidth += width + 2;
         cumulativePageWidth += columnsWidths.size() + 1;
 
-        return pageWidth == cumulativePageWidth;
+        return pageWidth >= 3 && pageHeight >= 3 && pageWidth == cumulativePageWidth;
     }
 }

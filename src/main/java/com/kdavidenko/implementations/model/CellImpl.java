@@ -19,6 +19,11 @@ class CellImpl implements Cell {
     }
 
     @Override
+    public int getCellIndex() {
+        return idx;
+    }
+
+    @Override
     public Cell setData(String data) {
         this.data = data;
         return this;

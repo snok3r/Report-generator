@@ -1,24 +1,23 @@
 package com.kdavidenko.implementations;
 
+import com.kdavidenko.Setting;
 import com.kdavidenko.implementations.model.DocumentElementsImpl;
 import com.kdavidenko.interfaces.Report;
 import com.kdavidenko.interfaces.ReportBuilder;
-import com.kdavidenko.interfaces.model.Document;
-import com.kdavidenko.interfaces.model.DocumentElementsFactory;
-import com.kdavidenko.interfaces.model.Page;
-import com.kdavidenko.interfaces.model.Row;
+import com.kdavidenko.interfaces.model.*;
 import com.kdavidenko.interfaces.util.Processor;
-import com.kdavidenko.util.ProcessorImpl;
+import com.kdavidenko.util.FileProcessor;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+
+import static com.kdavidenko.Setting.columnsNumber;
+import static com.kdavidenko.Setting.pageHeight;
 
 public class ReportBuilderImpl implements ReportBuilder {
 
     private String[] columnsNames;
 
-    private final DocumentElementsFactory factory = new DocumentElementsImpl();
+    private final DocumentElementsFactory factory = DocumentElementsImpl.getFactory();
     private Report report;
 
     private Document makeDocument(List<Page> pages) {
@@ -31,14 +30,45 @@ public class ReportBuilderImpl implements ReportBuilder {
     }
 
     private List<Page> makePages(List<Row> rows) {
-        Page firstPage = factory.getPage();
+
+        List<Page> pages = new ArrayList<Page>();
 
         List<Row> header = makeHeader(columnsNames);
 
-        for (Row row : rows)
-            firstPage.addRow(row);
+        for (int currentRowIdx = 0; currentRowIdx < rows.size(); ) {
 
-        return Arrays.asList(firstPage);
+            Page currentPage = factory.getPage();
+            Row currentRow = null;
+            insertHeader(currentPage, header);
+
+            int currentPageRowIdx = header.size() + 1; // + row_delimiter (1 row)
+            while (currentPageRowIdx < pageHeight && currentRowIdx < rows.size()) {
+
+                currentRow = rows.get(currentRowIdx);
+                currentPage.addRow(currentRow);
+
+                if (currentRow.isClosingRow())
+                    currentPageRowIdx++;
+
+                currentPageRowIdx++;
+                currentRowIdx++;
+            }
+
+            if (currentPageRowIdx > pageHeight)
+                currentRow.setClosingRow(false);
+
+            if (currentPageRowIdx >= pageHeight)
+                currentPage.setEnded(true);
+
+            pages.add(currentPage);
+        }
+
+        return pages;
+    }
+
+    private void insertHeader(Page page, List<Row> header) {
+        for (Row headerRow : header)
+            page.addRow(headerRow);
     }
 
     private List<Row> makeHeader(String[] columnsNames) {
@@ -49,36 +79,44 @@ public class ReportBuilderImpl implements ReportBuilder {
     }
 
     private List<Row> makeRows(List<String[]> data) {
-        Row header = factory.getRow();
-        header.addCell(factory.getCell(0, columnsNames[0]));
-        header.addCell(factory.getCell(1, columnsNames[1]));
-        header.addCell(factory.getCell(2, columnsNames[2]));
-        header.setClosingRow(true);
 
-        Row firstRow = factory.getRow();
-        firstRow.addCell(0, factory.getCell(0, "1"));
-        firstRow.addCell(1, factory.getCell(1, "25/11"));
-        firstRow.addCell(2, factory.getCell(2, "Павлов"));
+        List<Row> rows = new ArrayList<Row>();
 
-        Row secondRow = factory.getRow();
-        secondRow.addCell(factory.getCell(0));
-        secondRow.addCell(factory.getCell(1));
-        secondRow.addCell(factory.getCell(2, "Дмитрий"));
-        secondRow.setClosingRow(true);
+        for (String[] cellsData : data) {
+            Map<Integer, List<Cell>> rowsData = new LinkedHashMap<Integer, List<Cell>>();
 
-        return Arrays.asList(header, firstRow, secondRow);
+            for (int i = 0; i < cellsData.length; i++) {
+                List<String> cellData = FileProcessor.splitToLines(cellsData[i], Setting.getColumnWidth(i));
+
+                for (int j = 0; j < cellData.size(); j++) {
+                    if (rowsData.get(j) == null)
+                        rowsData.put(j, new ArrayList<Cell>(columnsNumber));
+                    rowsData.get(j).add(factory.getCell(i, cellData.get(j)));
+                }
+            }
+
+            Row newRow = null;
+            for (List<Cell> row : rowsData.values()) {
+                newRow = factory.getRow();
+                for (Cell cell : row)
+                    newRow.addCell(cell.getCellIndex(), cell);
+                rows.add(newRow);
+            }
+            newRow.setClosingRow(true);
+        }
+
+        return rows;
     }
 
     @Override
     public void build(String settingPath, String dataPath) throws Exception {
 
-        Processor processor = new ProcessorImpl();
+        Processor processor = new FileProcessor();
         processor.processSetting(settingPath);
         columnsNames = processor.getColumnsNames();
         List<String[]> processedData = processor.processDataFile(dataPath);
 
         Document document = makeDocument(makePages(makeRows(processedData)));
-
         report = new ReportImpl(document);
     }
 

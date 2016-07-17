@@ -24,10 +24,9 @@ public interface DocumentElementsFactory {
     Page getPage();
 
     /**
-     * Returns an empty Row.
-     * You can add Cells in it.
+     * Returns an Row with empty-data Cells.
      *
-     * @return an empty Row
+     * @return an Row with empty-data Cells
      */
     Row getRow();
 

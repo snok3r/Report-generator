@@ -2,7 +2,9 @@ package com.kdavidenko.util;
 
 import com.kdavidenko.interfaces.util.DataFileParser;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +29,13 @@ public class DataFileParserImpl implements DataFileParser {
 
         List<String[]> result = new ArrayList<String[]>();
         for (String line = in.readLine(); line != null; line = in.readLine())
-            result.add(splitByDelimeter(line));
+            result.add(splitByDelimiter(line));
         in.close();
 
         this.result = result;
     }
 
-    private String[] splitByDelimeter(String line) {
+    private String[] splitByDelimiter(String line) {
         return line.split(String.valueOf(DATA_DELIMITER));
     }
 

@@ -11,7 +11,6 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 
 import static com.kdavidenko.Setting.NEXT_LINE;
-import static com.kdavidenko.Setting.PAGE_DELIMITER;
 
 class ReportImpl implements Report {
 
@@ -25,7 +24,7 @@ class ReportImpl implements Report {
     public void print() {
         for (Page page : document.getPages()) {
             System.out.print(page.print());
-            System.out.print(PAGE_DELIMITER + NEXT_LINE);
+            System.out.print(NEXT_LINE);
         }
     }
 
@@ -43,7 +42,7 @@ class ReportImpl implements Report {
         OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file.getAbsoluteFile()), charset);
         for (Page page : document.getPages()) {
             osw.write(page.print());
-            osw.write(PAGE_DELIMITER + NEXT_LINE);
+            osw.write(NEXT_LINE);
         }
         osw.close();
     }

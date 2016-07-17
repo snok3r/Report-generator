@@ -3,6 +3,8 @@ package com.kdavidenko;
 import com.kdavidenko.interfaces.*;
 import com.kdavidenko.implementations.*;
 
+import java.io.File;
+
 public class Generator {
     public static void main(String[] args) throws Exception {
 
@@ -18,6 +20,6 @@ public class Generator {
         report.print();
 
 //        report.print(new File(args[2]));
-//        System.out.println("Отчёт успешно сохранён в файл '" + args[0] + "'");
+//        System.out.println("Отчёт успешно сохранён в файл '" + args[2] + "'");
     }
 }
