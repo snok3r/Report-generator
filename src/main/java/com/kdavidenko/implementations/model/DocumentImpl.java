@@ -1,7 +1,7 @@
-package com.kdavidenko.model;
+package com.kdavidenko.implementations.model;
 
-import com.kdavidenko.interfaces.Document;
-import com.kdavidenko.interfaces.Page;
+import com.kdavidenko.interfaces.model.Document;
+import com.kdavidenko.interfaces.model.Page;
 
 import java.util.ArrayList;
 import java.util.Collections;

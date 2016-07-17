@@ -1,15 +1,15 @@
 package com.kdavidenko.util;
 
-import com.kdavidenko.interfaces.DataFileParser;
+import com.kdavidenko.interfaces.util.DataFileParser;
 
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.kdavidenko.util.Setting.DATA_DELIMITER;
+import static com.kdavidenko.Setting.DATA_DELIMITER;
 
-public class DataParserImpl implements DataFileParser {
+public class DataFileParserImpl implements DataFileParser {
 
     private List<String[]> result;
 
@@ -26,11 +26,15 @@ public class DataParserImpl implements DataFileParser {
                         charset));
 
         List<String[]> result = new ArrayList<String[]>();
-        for (String str = in.readLine(); str != null; str = in.readLine())
-            result.add(str.split(String.valueOf(DATA_DELIMITER)));
+        for (String line = in.readLine(); line != null; line = in.readLine())
+            result.add(splitByDelimeter(line));
         in.close();
 
         this.result = result;
+    }
+
+    private String[] splitByDelimeter(String line) {
+        return line.split(String.valueOf(DATA_DELIMITER));
     }
 
     @Override

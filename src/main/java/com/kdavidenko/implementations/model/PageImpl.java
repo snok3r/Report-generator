@@ -1,12 +1,12 @@
-package com.kdavidenko.model;
+package com.kdavidenko.implementations.model;
 
-import com.kdavidenko.interfaces.Page;
-import com.kdavidenko.interfaces.Row;
+import com.kdavidenko.interfaces.model.Page;
+import com.kdavidenko.interfaces.model.Row;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.kdavidenko.util.Setting.NEXT_LINE;
+import static com.kdavidenko.Setting.NEXT_LINE;
 
 class PageImpl implements Page {
 

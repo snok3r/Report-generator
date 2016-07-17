@@ -1,4 +1,4 @@
-package com.kdavidenko.interfaces;
+package com.kdavidenko.interfaces.util;
 
 import java.util.List;
 

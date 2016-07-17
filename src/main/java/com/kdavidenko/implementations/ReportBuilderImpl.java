@@ -1,18 +1,24 @@
-package com.kdavidenko.model;
+package com.kdavidenko.implementations;
 
-import com.kdavidenko.interfaces.*;
+import com.kdavidenko.implementations.model.DocumentElementsImpl;
+import com.kdavidenko.interfaces.Report;
+import com.kdavidenko.interfaces.ReportBuilder;
+import com.kdavidenko.interfaces.model.Document;
+import com.kdavidenko.interfaces.model.DocumentElementsFactory;
+import com.kdavidenko.interfaces.model.Page;
+import com.kdavidenko.interfaces.model.Row;
+import com.kdavidenko.interfaces.util.Processor;
 import com.kdavidenko.util.ProcessorImpl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class ReportBuilderImpl implements ReportBuilder {
 
     private String[] columnsNames;
-    private List<String[]> processedData;
 
-    private DocumentElementsFactory factory = new DocumentElementsImpl();
-
+    private final DocumentElementsFactory factory = new DocumentElementsImpl();
     private Report report;
 
     private Document makeDocument(List<Page> pages) {
@@ -27,10 +33,19 @@ public class ReportBuilderImpl implements ReportBuilder {
     private List<Page> makePages(List<Row> rows) {
         Page firstPage = factory.getPage();
 
+        List<Row> header = makeHeader(columnsNames);
+
         for (Row row : rows)
             firstPage.addRow(row);
 
         return Arrays.asList(firstPage);
+    }
+
+    private List<Row> makeHeader(String[] columnsNames) {
+        List<String[]> data = new ArrayList<String[]>();
+        data.add(columnsNames);
+
+        return makeRows(data);
     }
 
     private List<Row> makeRows(List<String[]> data) {
@@ -59,8 +74,8 @@ public class ReportBuilderImpl implements ReportBuilder {
 
         Processor processor = new ProcessorImpl();
         processor.processSetting(settingPath);
-        processedData = processor.processDataFile(dataPath);
         columnsNames = processor.getColumnsNames();
+        List<String[]> processedData = processor.processDataFile(dataPath);
 
         Document document = makeDocument(makePages(makeRows(processedData)));
 

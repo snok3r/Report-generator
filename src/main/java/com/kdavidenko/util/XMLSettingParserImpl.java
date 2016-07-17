@@ -1,6 +1,6 @@
 package com.kdavidenko.util;
 
-import com.kdavidenko.interfaces.XMLSettingParser;
+import com.kdavidenko.interfaces.util.XMLSettingParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

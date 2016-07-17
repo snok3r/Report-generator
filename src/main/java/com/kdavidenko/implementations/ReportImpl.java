@@ -1,6 +1,8 @@
-package com.kdavidenko.model;
+package com.kdavidenko.implementations;
 
 import com.kdavidenko.interfaces.*;
+import com.kdavidenko.interfaces.model.Document;
+import com.kdavidenko.interfaces.model.Page;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,12 +10,12 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 
-import static com.kdavidenko.util.Setting.NEXT_LINE;
-import static com.kdavidenko.util.Setting.PAGE_DELIMITER;
+import static com.kdavidenko.Setting.NEXT_LINE;
+import static com.kdavidenko.Setting.PAGE_DELIMITER;
 
 class ReportImpl implements Report {
 
-    private Document document;
+    private final Document document;
 
     ReportImpl(Document document) {
         this.document = document;

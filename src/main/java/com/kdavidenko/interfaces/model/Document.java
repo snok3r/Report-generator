@@ -1,4 +1,4 @@
-package com.kdavidenko.interfaces;
+package com.kdavidenko.interfaces.model;
 
 import java.util.List;
 

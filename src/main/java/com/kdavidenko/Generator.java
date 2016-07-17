@@ -1,7 +1,7 @@
 package com.kdavidenko;
 
 import com.kdavidenko.interfaces.*;
-import com.kdavidenko.model.*;
+import com.kdavidenko.implementations.*;
 
 public class Generator {
     public static void main(String[] args) throws Exception {

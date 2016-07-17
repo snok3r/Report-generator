@@ -1,4 +1,4 @@
-package com.kdavidenko.interfaces;
+package com.kdavidenko.interfaces.util;
 
 public interface XMLSettingParser {
     void parse(String fileName) throws Exception;

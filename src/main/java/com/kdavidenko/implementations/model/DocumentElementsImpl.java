@@ -1,6 +1,6 @@
-package com.kdavidenko.model;
+package com.kdavidenko.implementations.model;
 
-import com.kdavidenko.interfaces.*;
+import com.kdavidenko.interfaces.model.*;
 
 public class DocumentElementsImpl implements DocumentElementsFactory {
     @Override

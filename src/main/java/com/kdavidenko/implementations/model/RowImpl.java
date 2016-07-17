@@ -1,12 +1,12 @@
-package com.kdavidenko.model;
+package com.kdavidenko.implementations.model;
 
-import com.kdavidenko.interfaces.Cell;
-import com.kdavidenko.interfaces.Row;
+import com.kdavidenko.interfaces.model.Cell;
+import com.kdavidenko.interfaces.model.Row;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.kdavidenko.util.Setting.*;
+import static com.kdavidenko.Setting.*;
 
 
 class RowImpl implements Row {

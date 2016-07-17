@@ -1,8 +1,9 @@
 package com.kdavidenko.util;
 
-import com.kdavidenko.interfaces.DataFileParser;
-import com.kdavidenko.interfaces.Processor;
-import com.kdavidenko.interfaces.XMLSettingParser;
+import com.kdavidenko.Setting;
+import com.kdavidenko.interfaces.util.DataFileParser;
+import com.kdavidenko.interfaces.util.Processor;
+import com.kdavidenko.interfaces.util.XMLSettingParser;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class ProcessorImpl implements Processor {
 
     @Override
     public List<String[]> processDataFile(String dataPath) throws Exception {
-        return processDataFile(dataPath, new DataParserImpl());
+        return processDataFile(dataPath, new DataFileParserImpl());
     }
 
     private List<String[]> processDataFile(String dataPath, DataFileParser parser) throws Exception {

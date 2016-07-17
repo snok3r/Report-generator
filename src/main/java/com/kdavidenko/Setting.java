@@ -1,4 +1,4 @@
-package com.kdavidenko.util;
+package com.kdavidenko;
 
 import java.util.ArrayList;
 import java.util.List;

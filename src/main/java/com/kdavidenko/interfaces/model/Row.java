@@ -1,4 +1,4 @@
-package com.kdavidenko.interfaces;
+package com.kdavidenko.interfaces.model;
 
 public interface Row {
     void addCell(Cell cell);

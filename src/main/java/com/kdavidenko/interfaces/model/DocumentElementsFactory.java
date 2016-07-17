@@ -1,4 +1,9 @@
-package com.kdavidenko.interfaces;
+package com.kdavidenko.interfaces.model;
+
+import com.kdavidenko.interfaces.model.Cell;
+import com.kdavidenko.interfaces.model.Document;
+import com.kdavidenko.interfaces.model.Page;
+import com.kdavidenko.interfaces.model.Row;
 
 public interface DocumentElementsFactory {
 

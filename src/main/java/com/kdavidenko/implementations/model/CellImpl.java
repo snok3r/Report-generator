@@ -1,8 +1,8 @@
-package com.kdavidenko.model;
+package com.kdavidenko.implementations.model;
 
-import com.kdavidenko.interfaces.Cell;
+import com.kdavidenko.interfaces.model.Cell;
 
-import static com.kdavidenko.util.Setting.getColumnWidth;
+import static com.kdavidenko.Setting.getColumnWidth;
 
 class CellImpl implements Cell {
 
