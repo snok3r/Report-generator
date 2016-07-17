@@ -34,36 +34,49 @@ public class ReportBuilderImpl implements ReportBuilder {
         List<Page> pages = new ArrayList<Page>();
 
         List<Row> header = makeHeader(columnsNames);
+        if (header.size() + 1 >= pageHeight) {
+            System.err.println("Couldn't fit header with given page-height " + pageHeight);
+            System.exit(-1);
+        }
 
-        for (int currentRowIdx = 0; currentRowIdx < rows.size(); ) {
-
-            Page currentPage = factory.getPage();
-            Row currentRow = null;
-            insertHeader(currentPage, header);
-
-            int currentPageRowIdx = header.size() + 1; // + row_delimiter (1 row)
-            while (currentPageRowIdx < pageHeight && currentRowIdx < rows.size()) {
-
-                currentRow = rows.get(currentRowIdx);
-                currentPage.addRow(currentRow);
-
-                if (currentRow.isClosingRow())
-                    currentPageRowIdx++;
-
-                currentPageRowIdx++;
-                currentRowIdx++;
-            }
-
-            if (currentPageRowIdx > pageHeight)
-                currentRow.setClosingRow(false);
-
-            if (currentPageRowIdx >= pageHeight)
-                currentPage.setEnded(true);
-
-            pages.add(currentPage);
+        Iterator<Row> rowIterator = rows.iterator();
+        while (rowIterator.hasNext()) {
+            Page newPage = makePage(header, rowIterator);
+            pages.add(newPage);
         }
 
         return pages;
+    }
+
+    private Page makePage(List<Row> header, Iterator<Row> rowIterator) {
+
+        Page currentPage = factory.getPage();
+        insertHeader(currentPage, header);
+
+        Row currentRow = factory.getRow(); // empty row
+        int currentPageRowIdx = header.size() + 1; // + row_delimiter (1 row)
+        while (currentPageRowIdx < pageHeight && rowIterator.hasNext()) {
+
+            currentRow = rowIterator.next();
+            currentPage.addRow(currentRow);
+
+            if (currentRow.hasRowDelimiter())
+                currentPageRowIdx++;
+
+            currentPageRowIdx++;
+        }
+
+        // remove row delimiter,
+        // if it is the last on the page
+        if (currentPageRowIdx > pageHeight)
+            currentRow.setRowDelimiter(false);
+
+        // add page delimiter,
+        // if it is the last row on the page
+        if (currentPageRowIdx >= pageHeight)
+            currentPage.setEnded(true);
+
+        return currentPage;
     }
 
     private void insertHeader(Page page, List<Row> header) {
@@ -82,30 +95,46 @@ public class ReportBuilderImpl implements ReportBuilder {
 
         List<Row> rows = new ArrayList<Row>();
 
-        for (String[] cellsData : data) {
-            Map<Integer, List<Cell>> rowsData = new LinkedHashMap<Integer, List<Cell>>();
-
-            for (int i = 0; i < cellsData.length; i++) {
-                List<String> cellData = FileProcessor.splitToLines(cellsData[i], Setting.getColumnWidth(i));
-
-                for (int j = 0; j < cellData.size(); j++) {
-                    if (rowsData.get(j) == null)
-                        rowsData.put(j, new ArrayList<Cell>(columnsNumber));
-                    rowsData.get(j).add(factory.getCell(i, cellData.get(j)));
-                }
-            }
-
-            Row newRow = null;
-            for (List<Cell> row : rowsData.values()) {
-                newRow = factory.getRow();
-                for (Cell cell : row)
-                    newRow.addCell(cell.getCellIndex(), cell);
-                rows.add(newRow);
-            }
-            newRow.setClosingRow(true);
-        }
+        for (String[] line : data)
+            rows.addAll(turnSingleLineOfDataIntoRows(line));
 
         return rows;
+    }
+
+    private List<Row> turnSingleLineOfDataIntoRows(String[] line) {
+
+        List<Row> rows = new ArrayList<Row>();
+
+        Row currentRow = null;
+        for (List<Cell> row : collectDataIntoRows(line).values()) {
+            currentRow = factory.getRow();
+
+            for (Cell cell : row)
+                currentRow.addCell(cell.getCellIndex(), cell);
+
+            rows.add(currentRow);
+        }
+
+        if (currentRow != null)
+            currentRow.setRowDelimiter(true);
+
+        return rows;
+    }
+
+    private Map<Integer, List<Cell>> collectDataIntoRows(String[] data) {
+        Map<Integer, List<Cell>> rowsData = new LinkedHashMap<Integer, List<Cell>>();
+
+        for (int i = 0; i < data.length; i++) {
+            List<String> cellData = FileProcessor.splitToLines(data[i], Setting.getColumnWidth(i));
+
+            for (int j = 0; j < cellData.size(); j++) {
+                if (rowsData.get(j) == null)
+                    rowsData.put(j, new ArrayList<Cell>(columnsNumber));
+                rowsData.get(j).add(factory.getCell(i, cellData.get(j)));
+            }
+        }
+
+        return rowsData;
     }
 
     @Override
@@ -114,10 +143,11 @@ public class ReportBuilderImpl implements ReportBuilder {
         Processor processor = new FileProcessor();
         processor.processSetting(settingPath);
         columnsNames = processor.getColumnsNames();
+
         List<String[]> processedData = processor.processDataFile(dataPath);
 
         Document document = makeDocument(makePages(makeRows(processedData)));
-        report = new ReportImpl(document);
+        this.report = new ReportImpl(document);
     }
 
     @Override

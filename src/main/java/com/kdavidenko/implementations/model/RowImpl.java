@@ -44,12 +44,12 @@ class RowImpl implements Row {
     }
 
     @Override
-    public void setClosingRow(boolean closingRow) {
-        this.closingRow = closingRow;
+    public void setRowDelimiter(boolean hasRowDelimiter) {
+        this.closingRow = hasRowDelimiter;
     }
 
     @Override
-    public boolean isClosingRow() {
+    public boolean hasRowDelimiter() {
         return closingRow;
     }
 

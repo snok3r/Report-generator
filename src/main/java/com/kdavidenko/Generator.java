@@ -25,9 +25,8 @@ public class Generator {
         reportBuilder.build(args[0], args[1]);
 
         Report report = reportBuilder.getReport();
-        report.print();
-
         report.print(new File(args[2]));
+
         System.out.println("Отчёт успешно сохранён в файл '" + args[2] + "'");
     }
 }

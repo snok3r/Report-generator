@@ -49,7 +49,7 @@ class PageImpl implements Page {
 
         for (Row row : rows) {
             sb.append(row.print()).append(NEXT_LINE);
-            if (row.isClosingRow())
+            if (row.hasRowDelimiter())
                 sb.append(row.printLine()).append(NEXT_LINE);
         }
         if (ended)

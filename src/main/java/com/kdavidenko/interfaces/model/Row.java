@@ -35,16 +35,16 @@ public interface Row {
     Cell getCell(int idx);
 
     /**
-     * @param closingRow параметр, определяющий заврешенность
-     *                   данных в строке
+     * @param hasRowDelimiter параметр, определяющий наличие
+     *                        разделителя строк
      */
-    void setClosingRow(boolean closingRow);
+    void setRowDelimiter(boolean hasRowDelimiter);
 
     /**
      * @return true, если данная строка
-     * представляет законченные данные
+     * имеет разделитель строк
      */
-    boolean isClosingRow();
+    boolean hasRowDelimiter();
 
     /**
      * Возвращает строку, представляющую строку.
