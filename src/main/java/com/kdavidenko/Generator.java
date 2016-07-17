@@ -3,10 +3,8 @@ package com.kdavidenko;
 import com.kdavidenko.interfaces.*;
 import com.kdavidenko.model.*;
 
-import java.io.IOException;
-
 public class Generator {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
 
         if (args.length < 3) {
             System.err.println("Not enough arguments: " + args.length + " (needed 3)");

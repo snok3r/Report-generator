@@ -1,44 +1,70 @@
 package com.kdavidenko.model;
 
-import com.kdavidenko.interfaces.Report;
-import com.kdavidenko.interfaces.ReportBuilder;
-import com.kdavidenko.interfaces.XMLSettingParser;
-import com.kdavidenko.util.Setting;
-import com.kdavidenko.util.XMLSettingParserImpl;
+import com.kdavidenko.interfaces.*;
+import com.kdavidenko.util.ProcessorImpl;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ReportBuilderImpl implements ReportBuilder {
 
     private String[] columnsNames;
+    private List<String[]> processedData;
+
+    private DocumentElementsFactory factory = new DocumentElementsImpl();
+
     private Report report;
 
-    private boolean setUpSetting(String settingsPath, XMLSettingParser parser) {
-        try {
-            parser.parse(settingsPath);
-        } catch (Exception e) {
-            System.err.println("Couldn't parse XML file " + settingsPath + ": " + e.getMessage());
-            System.exit(-1);
-        }
+    private Document makeDocument(List<Page> pages) {
+        Document document = factory.getDocument();
 
-        Setting.setPageWidth(parser.getWidth());
-        Setting.setPageHeight(parser.getHeight());
+        for (Page page : pages)
+            document.addPage(page);
 
-        Setting.setColumnsNumber(parser.getNumberOfColumns());
-        for (int i = 0; i < parser.getNumberOfColumns(); i++)
-            Setting.setColumnWidth(i, parser.getColumnWidth(i));
+        return document;
+    }
 
-        columnsNames = parser.getColumnsTitles();
+    private List<Page> makePages(List<Row> rows) {
+        Page firstPage = factory.getPage();
 
-        return Setting.isSettingValid();
+        for (Row row : rows)
+            firstPage.addRow(row);
+
+        return Arrays.asList(firstPage);
+    }
+
+    private List<Row> makeRows(List<String[]> data) {
+        Row header = factory.getRow();
+        header.addCell(factory.getCell(0, columnsNames[0]));
+        header.addCell(factory.getCell(1, columnsNames[1]));
+        header.addCell(factory.getCell(2, columnsNames[2]));
+        header.setClosingRow(true);
+
+        Row firstRow = factory.getRow();
+        firstRow.addCell(0, factory.getCell(0, "1"));
+        firstRow.addCell(1, factory.getCell(1, "25/11"));
+        firstRow.addCell(2, factory.getCell(2, "Павлов"));
+
+        Row secondRow = factory.getRow();
+        secondRow.addCell(factory.getCell(0));
+        secondRow.addCell(factory.getCell(1));
+        secondRow.addCell(factory.getCell(2, "Дмитрий"));
+        secondRow.setClosingRow(true);
+
+        return Arrays.asList(header, firstRow, secondRow);
     }
 
     @Override
-    public void build(String settingPath, String dataPath) {
-        if (!setUpSetting(settingPath, new XMLSettingParserImpl())) {
-            System.err.print("Setting file is not valid");
-            return;
-        }
+    public void build(String settingPath, String dataPath) throws Exception {
 
-        report = new ReportImpl(columnsNames);
+        Processor processor = new ProcessorImpl();
+        processor.processSetting(settingPath);
+        processedData = processor.processDataFile(dataPath);
+        columnsNames = processor.getColumnsNames();
+
+        Document document = makeDocument(makePages(makeRows(processedData)));
+
+        report = new ReportImpl(document);
     }
 
     @Override

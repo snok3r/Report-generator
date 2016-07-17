@@ -45,4 +45,12 @@ class CellImpl implements Cell {
 
         return sb.toString();
     }
+
+    @Override
+    public String toString() {
+        return "CellImpl{" +
+                "idx=" + idx +
+                ", data='" + data + '\'' +
+                '}';
+    }
 }
